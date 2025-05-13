@@ -1,7 +1,7 @@
 FROM ruby:2.3
 
 # Set working directory inside the container
-WORKDIR /app
+WORKDIR /rails_app
 
 # Copy Gemfile and Gemfile.lock
 COPY Gemfile Gemfile.lock ./
@@ -12,5 +12,5 @@ RUN bundle install
 # Copy the rest of the app
 COPY . .
 
-# Start the Rails server (or whatever command you need)
+# Start the Rails server
 CMD ["rails", "server", "-b", "0.0.0.0"]
