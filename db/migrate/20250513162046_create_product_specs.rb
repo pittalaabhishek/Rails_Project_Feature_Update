@@ -1,5 +1,5 @@
 class CreateProductSpecs < ActiveRecord::Migration
-  def up
+  def change
     create_table :product_specs do |t|
       t.references :product, null: false, foreign_key: true
       t.string :key, null: false
