@@ -9,6 +9,8 @@ class ProductsController < ApplicationController
   end
 
   def create
+    @product = Product.new(product_params.except(:product_attributes))
+
     if params[:add_more_attributes]
       attributes = params[:product][:product_attributes] || []
       attributes << { "key" => "", "value" => "" }
@@ -17,14 +19,8 @@ class ProductsController < ApplicationController
       render :new
     else
       raw_attributes = params[:product][:product_attributes] || []
-      transformed_attributes = raw_attributes.each_with_object({}) do |attr, hash|
-        next if attr["key"].blank?
-        hash[attr["key"]] = attr["value"]
-      end
-  
-      @product = Product.new(product_params.except(:product_attributes))
-      @product.product_attributes = transformed_attributes
-  
+      @product.assign_attributes_from_raw(raw_attributes)
+
       if @product.save
         redirect_to products_path, notice: 'Product was successfully created.'
       else
@@ -32,7 +28,6 @@ class ProductsController < ApplicationController
       end
     end
   end
-  
   
   private
 
