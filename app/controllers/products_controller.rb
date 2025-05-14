@@ -1,39 +1,49 @@
 class ProductsController < ApplicationController
   def new
     @product = Product.new
-    @product.product_attributes ||= {}
+    @product_specs = [{ key: "", value: "" }]
   end
 
   def index
     @products = Product.all
   end
 
+  
   def create
-    @product = Product.new(product_params.except(:product_attributes))
-
+    @product = Product.new(product_params)
+    
     if params[:add_more_attributes]
-      attributes = params[:product][:product_attributes] || []
-      attributes << { "key" => "", "value" => "" }
-      params[:product][:product_attributes] = attributes
-      @product = Product.new(product_params)
-      render :new
-    else
-      raw_attributes = params[:product][:product_attributes] || []
-      @product.assign_attributes_from_raw(raw_attributes)
-
-      if @product.save
-        redirect_to products_path, notice: 'Product was successfully created.'
-      else
-        render :new
+      @product_specs = []
+      if params[:product_specs].present?
+        params[:product_specs].each do |index, spec|
+          @product_specs << { key: spec[:key], value: spec[:value] }
+        end
       end
+      @product_specs << { key: "", value: "" }
+      render :new
+    elsif @product.save
+      if params[:product_specs].present?
+        params[:product_specs].each do |index, spec|
+          next if spec[:key].blank? && spec[:value].blank?
+          @product.product_specs.create(key: spec[:key], value: spec[:value])
+        end
+      end
+      redirect_to products_path
+    else
+      @product_specs = []
+      if params[:product_specs].present?
+        params[:product_specs].each do |index, spec|
+          @product_specs << { key: spec[:key], value: spec[:value] }
+        end
+      end
+      @product_specs = [{ key: "", value: "" }] if @product_specs.empty?
+      render :new
     end
   end
   
   private
 
   def product_params
-    params.require(:product).permit(:name).tap do |whitelisted|
-      whitelisted[:product_attributes] = params[:product][:product_attributes]
-    end
+    params.require(:product).permit(:name)
   end
 end

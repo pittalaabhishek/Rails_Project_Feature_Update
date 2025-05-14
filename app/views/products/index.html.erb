@@ -5,8 +5,8 @@
     <div>
       <p><strong>Name:</strong> <%= product.name %></p>
       <ul>
-        <% product.product_attributes.each do |key, value| %>
-          <li><strong><%= key %>:</strong> <%= value %></li>
+        <% product.product_specs.each do |spec| %>
+          <li><strong><%= spec.key %>:</strong> <%= spec.value %></li>
         <% end %>
       </ul>
       <hr>

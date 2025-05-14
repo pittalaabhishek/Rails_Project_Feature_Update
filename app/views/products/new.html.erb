@@ -8,18 +8,18 @@
 
   <h3>Attributes</h3>
 
-  <% attributes = params.dig(:product, :product_attributes) || [{}] %>
-
-  <% attributes.each do |attr| %>
-    <div>
-      <%= text_field_tag "product[product_attributes][][key]", attr[:key], placeholder: "Attribute name" %>
-      <%= text_field_tag "product[product_attributes][][value]", attr[:value], placeholder: "Attribute value" %>
-    </div>
-  <% end %>
+  <div>
+    <% @product_specs.each_with_index do |spec, index| %>
+      <div>
+        <%= text_field_tag "product_specs[#{index}][key]", spec[:key], placeholder: "Attribute name" %>
+        <%= text_field_tag "product_specs[#{index}][value]", spec[:value], placeholder: "Attribute value" %>
+      </div>
+    <% end %>
+  </div>
 
   <div>
     <%= submit_tag "Add Another Attribute", name: "add_more_attributes" %>
-    <%= f.submit "Create Product" %>
+    <%= f.submit 'Create Product'%>
   </div>
 <% end %>
 
