@@ -7,12 +7,13 @@
   </div>
 
   <h3>Attributes</h3>
-
   <div>
-    <% @product_specs.each_with_index do |spec, index| %>
+    <%= f.fields_for :product_specs do |spec_form| %>
       <div>
-        <%= text_field_tag "product_specs[#{index}][key]", spec[:key], placeholder: "Attribute name" %>
-        <%= text_field_tag "product_specs[#{index}][value]", spec[:value], placeholder: "Attribute value" %>
+        <div>
+          <%= spec_form.text_field :key, placeholder: "Attribute name"%>
+          <%= spec_form.text_field :value, placeholder: "Attribute value" %>
+        </div>
       </div>
     <% end %>
   </div>
