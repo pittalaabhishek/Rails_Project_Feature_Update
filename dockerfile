@@ -1,9 +1,9 @@
 FROM ruby:2.3
 
 # Set working directory inside the container
-WORKDIR /rails_app
+WORKDIR /rails5_app
 
-# Copy Gemfile and Gemfile.lock
+# Copy Gemfile
 COPY Gemfile Gemfile.lock ./
 
 # Install dependencies
@@ -13,4 +13,4 @@ RUN bundle install
 COPY . .
 
 # Start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-b", "0.0.0.0", "-p", "4000"]
