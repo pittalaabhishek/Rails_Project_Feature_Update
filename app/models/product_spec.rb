@@ -3,5 +3,5 @@ class ProductSpec < ActiveRecord::Base
   validates :key, presence: true
   validates :value, presence: true
 
-  validates :product, presence: true
+  validates :product, presence: true, on: :update
 end

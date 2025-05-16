@@ -5,17 +5,3 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Product.create!([
-  { 
-    name: "Laptop", 
-    product_attributes: { "brand" => "Dell", "ram" => "16GB", "storage" => "512GB SSD" } 
-  },
-  { 
-    name: "Smartphone", 
-    product_attributes: { "brand" => "Apple", "model" => "iPhone 13", "color" => "Midnight" } 
-  },
-  { 
-    name: "Headphones", 
-    product_attributes: { "brand" => "Sony", "type" => "Wireless", "noise_cancelling" => true } 
-  }
-])
