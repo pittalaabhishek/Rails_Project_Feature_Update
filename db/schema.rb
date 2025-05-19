@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20250516065639) do
+ActiveRecord::Schema.define(version: 20250519065109) do
 
   create_table "product_specs", force: :cascade do |t|
     t.integer  "product_id",             null: false
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 20250516065639) do
     t.string   "value",      limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["product_id", "key"], name: "index_product_specs_on_product_id_and_key", unique: true
+    t.index ["product_id"], name: "index_product_specs_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
